@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>Schedule</title>
+</head>
+<body>
+<?php
+$con=mysqli_connect("mysql4.000webhost.com","a1410105_admin","sanjeevi@busdb","a1410105_busdb");
+
+if (mysqli_connect_errno($con))
+{
+   echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
+$sql = "SELECT * FROM schedule";
+$result = mysqli_query($con,$sql) or die(mysql_error());
+//$id=$_COOKIE["did"];
+?>
+
+<form action="http://bustracking.site50.net/schedule_next.php" method="post">
+  From : 
+<select name="froms" id="froms">
+
+<?
+$sql = "SELECT DISTINCT froms FROM schedule";
+$result = mysqli_query($con,$sql) or die(mysql_error());
+
+while ($array = mysqli_fetch_array($result)) 
+{
+ $froms = $array['froms'];
+?>
+
+<option value="<?=$froms?>" selected="<?=$froms?>"><?=$froms?>  <?}?>
+
+</select><br>
+
+<br>To : 
+<select name="tos" id="tos">
+<?
+$sql = "SELECT DISTINCT tos FROM schedule";
+$result = mysqli_query($con,$sql) or die(mysql_error());
+
+while ($array = mysqli_fetch_array($result)) 
+{
+ $tos = $array['tos'];
+?>
+
+<option value="<?=$tos?>" selected="<?=$tos?>"><?=$tos?>  <?}?>
+
+</select>
+<br><br><input type="submit" value="Find bus timings">
+</form>
+<?
+mysqli_close($con);
+?>
+
+</body>
+</html>

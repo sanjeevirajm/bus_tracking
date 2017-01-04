@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>Message box</title>
+</head>
+<body>
+
+<?php
+$con=mysqli_connect("mysql4.000webhost.com","a1410105_admin","sanjeevi@busdb","a1410105_busdb");
+if (mysqli_connect_errno($con))
+{
+   echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
+?>
+Driver
+   <table border=1> <tr> <th> Message </th> <th> Bus No </th> <th> Name </th> <th> Phone no </th> <th> ID </th> </tr>
+<?
+//Driver
+$result = mysqli_query($con,"SELECT id,name,phoneno,busno,message FROM driver");
+
+while ($array = mysqli_fetch_array($result)) 
+{
+ $did = $array['id'];
+ $dname = $array['name'];
+ $dmessage = $array['message'];
+ $dphoneno = $array['phoneno'];
+ $busno = $array['busno'];
+ ?>
+  <tr> <td> <? echo $dmessage; ?> </td> <td> <? echo $busno; ?> </td> <td> <? echo $dname; ?> <td> <? echo $dphoneno;?> </td> <td> <? echo $did; ?> 
+ <?
+ }
+?>
+</table>
+
+<br> Conductor
+
+   <table border=1> <tr> <th> Message </th> <th> Bus No </th> <th> Name </th> <th> Phone no </th> <th> ID </th> </tr>
+<?
+
+//conductor
+$result = mysqli_query($con,"SELECT id,name,phoneno,busno,message FROM conductor");
+
+while ($array = mysqli_fetch_array($result)) 
+{
+ $cid = $array['id'];
+ $cname = $array['name'];
+ $cmessage = $array['message'];
+ $cphoneno = $array['phoneno'];
+ $busno = $array['busno'];
+?>
+  <tr> <td> <? echo $cmessage; ?> </td> <td> <? echo $busno; ?> </td><td> <? echo $cname; ?> <td> <? echo $cphoneno; ?> </td> <td> <? echo $cid; ?> 
+ <?
+ }
+?>
+</table>
+<? mysqli_close($con);
+?>
+
+<br>
+<a href="http:\\bustracking.site50.net\login_admin.html\"> BACK </a>
+</body>
+</html>

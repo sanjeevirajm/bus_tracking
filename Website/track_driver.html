@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Tracking your coordinates.</p>
+<p id="demo"></p>
+
+<script>
+
+var x = document.getElementById("demo");
+var latitude, longitude;
+x.innerHTML = " Please wait...";
+var id=getCookie("did");
+x.innerHTML = " ID : "+id;
+var data=setInterval(function get(){getLocation()},5000);
+var send=setInterval(function send(){send_data()},5000);
+
+var oxmlHttp;
+var oxmlHttpSend;
+
+function getCookie(name)
+  {
+    var re = new RegExp(name + "=([^;]+)");
+    var value = re.exec(document.cookie);
+    return (value != null) ? unescape(value[1]) : null;
+  }
+
+function getLocation() 
+  {
+    if (navigator.geolocation) 
+    {
+        navigator.geolocation.watchPosition(showPosition);
+    } else
+    { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+ }
+    
+function showPosition(position) 
+  {
+	latitude=position.coords.latitude;
+	longitude=position.coords.longitude;
+        x.innerHTML="Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;	
+        
+  }
+
+function send_data()
+{
+	var url="driver_latlongins.php?latitude=" + latitude + "&longitude=" + longitude + "&id=" + id;
+        if(typeof XMLHttpRequest != "undefined")
+        {
+         oxmlHttp = new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject)
+        {
+         oxmlHttp = new ActiveXObject("Microsoft.XMLHttp");
+        }
+       if(oxmlHttp == null)
+       {
+        alert("Browser does not support XML Http Request");
+       return;
+       }
+ 
+
+    oxmlHttp.open("GET",url,true);
+    oxmlHttp.send(null);
+}
+
+
+ </script>
+
+<form action="driver_message.php" method="GET">
+<br><b>Enter message here :</b> <br>
+<input type="text" name="msg"><br>
+<input type="submit" value="send">
+</body>
+</html>
+
+
+
